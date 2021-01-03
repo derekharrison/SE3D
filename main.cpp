@@ -3,6 +3,8 @@
  *
  *  Created on: Dec 29, 2020
  *      Author: d-w-h
+ *
+ *      Numerical solution of the Schrodinger equation for the hydrogen atom
  */
 
 #include <stdio.h>
@@ -11,7 +13,9 @@
 #include "user_types.hpp"
 
 double V(double r, double t) {
-    return -1/(r + 1e-20);
+	/* Potential */
+	double k = 1.0;
+    return -k/(r + 1e-20);
 }
 
 int main(int argc, char* argv[]) {
