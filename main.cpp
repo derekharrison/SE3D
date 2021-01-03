@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
                 i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
     }
 
-    /* Free allocates data */
+    /* Free allocated data */
     free_mat3D(solver_data.psi, domain_data.n_r, domain_data.n_theta);
     free_mat3D(solver_data.prob_density, domain_data.n_r, domain_data.n_theta);
     delete [] solver_data.r_p;
