@@ -93,12 +93,6 @@ int main(int argc, char* argv[]) {
     /* Execute solver */
     solver(domain_data, time_data, physical_params, boundaries, &solver_data);
 
-    /* Print some results */
-    for(int i = 0; i < domain_data.n_r; ++i) {
-        printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f\n",
-                i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
-    }
-
     /* Free allocated data */
     free_mat3D(solver_data.psi, domain_data.n_r, domain_data.n_theta);
     free_mat3D(solver_data.prob_density, domain_data.n_r, domain_data.n_theta);
@@ -109,8 +103,6 @@ int main(int argc, char* argv[]) {
     delete [] solver_data.psi_p_bottom;
     delete [] solver_data.prob_density_p_top;
     delete [] solver_data.prob_density_p_bottom;
-
-    printf("done\n");
 
     return 0;
 }

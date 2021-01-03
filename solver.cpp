@@ -11,7 +11,6 @@
 #include <math.h>
 #include <stdio.h>
 #include <string>
-#include <time.h>
 #include "complex.hpp"
 #include "main.hpp"
 #include "mem_ops.hpp"
@@ -26,7 +25,6 @@ void solver(d_data domain_data,
     int n_r, n_theta, n_phi, nt;
     double R, to, tf, h, m;
     Complex psi0, psiR;
-    clock_t t_start = clock();
 
     /* Parameters */
     n_r = domain_data.n_r;
@@ -1092,8 +1090,4 @@ void solver(d_data domain_data,
     delete [] prob_density_p_top;
     delete [] prob_density_p_bottom;
 
-    /* Print time taken for execution */
-    clock_t t_end = clock();
-    double sim_time = double (t_end - t_start)/CLOCKS_PER_SEC;
-    printf("time taken: %f\n", sim_time);
 }
