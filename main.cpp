@@ -10,6 +10,9 @@
  *
  */
 
+#include <cstdlib>
+#include <iostream>
+#include <math.h>
 #include <stdio.h>
 #include "mem_ops.hpp"
 #include "solver.hpp"
@@ -21,34 +24,62 @@ double V(double r, double t) {
     return -k/(r + 1e-20);
 }
 
+double psi_init_real(double r, double theta, double phi) {
+	/* Initial Re(psi) */
+	return r*exp(r)*cos(theta);
+}
+
+double psi_init_im(double r, double theta, double phi) {
+	/* Initial Im(psi) */
+	return 0.0;
+}
+
+double psi_init_p_top_real(double r) {
+	/* Initial Re(psi) for top pole nodes */
+	return r*exp(r);
+}
+
+double psi_init_p_top_im(double r) {
+	/* Initial Im(psi) for top pole nodes */
+	return 0.0;
+}
+
+double psi_init_p_bottom_real(double r) {
+	/* Initial Re(psi) for bottom pole nodes */
+	return r*exp(r);
+}
+
+double psi_init_p_bottom_im(double r) {
+	/* Initial Im(psi) for bottom pole nodes */
+	return 0.0;
+}
+
 int main(int argc, char* argv[]) {
     d_data domain_data;
     t_data time_data;
     p_params physical_params;
-    bound_and_psi_init boundaries_and_psi_init;
+    b_data boundaries;
     s_data solver_data;
 
     /* Parameters */
     domain_data.n_r = 10;                         //Number of nodes in the radial direction
     domain_data.n_theta = 10;                     //Number of nodes in the theta direction
     domain_data.n_phi = 10;                       //Number of nodes in the phi direction
-    domain_data.nt = 10;                          //Number of timesteps
+    domain_data.nt = 20;                          //Number of timesteps
     domain_data.R = 1.0;                          //Length of domain in the radial direction
 
     time_data.to = 0.0;                           //Initial time
-    time_data.tf = 1.0;                           //Final time
+    time_data.tf = 2.0;                           //Final time
 
     physical_params.h = 1.0;                      //Constant
     physical_params.m = 1.0;                      //Mass of particle
 
-    boundaries_and_psi_init.psiInit.a = 0.5;      //Real value of psi at time t = 0
-    boundaries_and_psi_init.psiInit.b = 0.5;      //Imaginary value of psi at time t = 0
-    boundaries_and_psi_init.psi0.a = 0.0;         //Real value of psi at the center of the domain
-    boundaries_and_psi_init.psi0.b = 0.0;         //Imaginary value of psi at the center of the domain
-    boundaries_and_psi_init.psiR.a = 0.0;         //Real value of psi at R
-    boundaries_and_psi_init.psiR.b = 0.0;         //Imaginary value of psi at R
+    boundaries.psi0.a = 0.0;         //Real value of psi at the center of the domain
+    boundaries.psi0.b = 0.0;         //Imaginary value of psi at the center of the domain
+    boundaries.psiR.a = 0.0;         //Real value of psi at R
+    boundaries.psiR.b = 0.0;         //Imaginary value of psi at R
 
-    /* Allocate memory for solver data */
+    /* Allocate memory for solver data ans initial psi */
     solver_data.psi = mat3D(domain_data.n_r, domain_data.n_theta, domain_data.n_phi);
     solver_data.prob_density = mat3D(domain_data.n_r, domain_data.n_theta, domain_data.n_phi);
     solver_data.psi_p_top = new Complex[domain_data.n_r];
@@ -60,7 +91,7 @@ int main(int argc, char* argv[]) {
     solver_data.phi_p = new double[domain_data.n_phi];
 
     /* Execute solver */
-    solver(domain_data, time_data, physical_params, boundaries_and_psi_init, &solver_data);
+    solver(domain_data, time_data, physical_params, boundaries, &solver_data);
 
     /* Print some results */
     for(int i = 0; i < domain_data.n_r; ++i) {

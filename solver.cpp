@@ -5,7 +5,9 @@
  *      Author: d-w-h
  */
 
+#include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <math.h>
 #include <stdio.h>
 #include <string>
@@ -18,11 +20,12 @@
 void solver(d_data domain_data,
             t_data time_data,
             p_params physical_params,
-            bound_and_psi_init boundaries_and_psi_init,
+            b_data boundaries,
             s_data* solver_data) {
+
     int n_r, n_theta, n_phi, nt;
     double R, to, tf, h, m;
-    Complex psi0, psiR, psiInit;
+    Complex psi0, psiR;
     clock_t t_start = clock();
 
     /* Parameters */
@@ -38,12 +41,10 @@ void solver(d_data domain_data,
     h = physical_params.h;
     m = physical_params.m;
 
-    psiInit.a = boundaries_and_psi_init.psiInit.a;
-    psiInit.b = boundaries_and_psi_init.psiInit.b;
-    psi0.a = boundaries_and_psi_init.psi0.a;
-    psi0.b = boundaries_and_psi_init.psi0.b;
-    psiR.a = boundaries_and_psi_init.psiR.a;
-    psiR.b = boundaries_and_psi_init.psiR.b;
+    psi0.a = boundaries.psi0.a;
+    psi0.b = boundaries.psi0.b;
+    psiR.a = boundaries.psiR.a;
+    psiR.b = boundaries.psiR.b;
 
     /* Start calculations */
     double* r = new double[n_r];
@@ -68,7 +69,7 @@ void solver(d_data domain_data,
     double dtheta = 2*M_PI/n_theta;
     double dphi = M_PI/(n_phi+1);
     double dt = (tf - to)/nt;
-    double t = 0.0;
+    double t = to;
     double alpha = h/(2*m);
 
     /* Initialize r vector */
@@ -125,8 +126,8 @@ void solver(d_data domain_data,
             for(int k = 0; k < n_phi; ++k) {
                 psi[i][j][k].a = 0.0;
                 psi[i][j][k].b = 0.0;
-                psio[i][j][k].a = psiInit.a;
-                psio[i][j][k].b = psiInit.b;
+                psio[i][j][k].a = psi_init_real(r_p[i], theta_p[j], phi_p[k]);
+                psio[i][j][k].b = psi_init_im(r_p[i], theta_p[j], phi_p[k]);
             }
         }
     }
@@ -140,22 +141,21 @@ void solver(d_data domain_data,
         }
     }
 
-    for(int i = 0; i < n_r; ++i) {
-        for(int j = 0; j < n_theta; ++j) {
-            for(int k = 0; k < n_phi; ++k) {
-                psi_prev[i][j][k].a = psi[i][j][k].a;
-                psi_prev[i][j][k].b = psi[i][j][k].b;
-            }
-        }
-    }
-
-
     for(int j = 0; j < n_theta; ++j) {
         for(int k = 0; k < n_phi; ++k) {
             psi[n_r-1][j][k].a = psiR.a;
             psi[n_r-1][j][k].b = psiR.b;
             psio[n_r-1][j][k].a = psiR.a;
             psio[n_r-1][j][k].b = psiR.b;
+        }
+    }
+
+    for(int i = 0; i < n_r; ++i) {
+        for(int j = 0; j < n_theta; ++j) {
+            for(int k = 0; k < n_phi; ++k) {
+                psi_prev[i][j][k].a = psi[i][j][k].a;
+                psi_prev[i][j][k].b = psi[i][j][k].b;
+            }
         }
     }
 
@@ -169,10 +169,10 @@ void solver(d_data domain_data,
         psi_p_top[i].b = 0.0;
         psi_p_bottom[i].a = 0.0;
         psi_p_bottom[i].b = 0.0;
-        psi_p_topo[i].a = psiInit.a;
-        psi_p_topo[i].b = psiInit.b;
-        psi_p_bottomo[i].a = psiInit.a;
-        psi_p_bottomo[i].b = psiInit.b;
+        psi_p_topo[i].a = psi_init_p_top_real(r_p[i]);
+        psi_p_topo[i].b = psi_init_p_top_im(r_p[i]);
+        psi_p_bottomo[i].a = psi_init_p_top_real(r_p[i]);
+        psi_p_bottomo[i].b = psi_init_p_top_im(r_p[i]);
     }
     psi_p_top[n_r-1].a = psiR.a;
     psi_p_top[n_r-1].b = psiR.b;
@@ -943,9 +943,6 @@ void solver(d_data domain_data,
 
         solver_data->error_real = error_real;
         solver_data->error_im = error_im;
-
-        printf("error real: %E, error im: %E\n", error_real, error_im);
-
 
         /* Export psi data */
         std::ofstream myfile;

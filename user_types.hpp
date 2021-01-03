@@ -28,11 +28,10 @@ typedef struct physical_params {
     double m;
 } p_params;
 
-typedef struct boundaries_and_psi_init {
-    Complex psiInit;
+typedef struct boundary_data {
     Complex psi0;
     Complex psiR;
-} bound_and_psi_init;
+} b_data;
 
 typedef struct solver_data {
     Complex*** psi;
