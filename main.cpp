@@ -16,8 +16,8 @@
 #include "user_types.hpp"
 
 double V(double r, double t) {
-	/* Potential */
-	double k = 1.0;
+    /* Potential */
+    double k = 1.0;
     return -k/(r + 1e-20);
 }
 
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
     /* Print some results */
     for(int i = 0; i < domain_data.n_r; ++i) {
         printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f\n",
-        		i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
+                i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
     }
 
     /* Free allocates data */
