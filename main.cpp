@@ -4,7 +4,10 @@
  *  Created on: Dec 29, 2020
  *      Author: d-w-h
  *
- *      Numerical solution of the Schrodinger equation for the hydrogen atom
+ *      Numerical solution of the Schrodinger equation for the hydrogen atom:
+ *
+ *      ih*d(psi)/dt = -h*h/2m*div(grad(psi)) + V*psi
+ *
  */
 
 #include <stdio.h>
