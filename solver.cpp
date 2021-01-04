@@ -1066,9 +1066,14 @@ void solver(d_data domain_data,
         solver_data->prob_density_p_bottom[i].a = prob_density_p_bottom[i].a;
         solver_data->prob_density_p_bottom[i].b = prob_density_p_bottom[i].b;
         solver_data->r_p[i] = r_p[i];
-        solver_data->theta_p[i] = theta_p[i];
-        solver_data->phi_p[i] = phi_p[i];
+    }
 
+    for(int j = 0; j < n_theta; ++j) {
+    	solver_data->theta_p[j] = theta_p[j];
+    }
+
+    for(int k = 0; k < n_phi; ++k) {
+        solver_data->phi_p[k] = phi_p[k];
     }
 
     /* Deallocate data */

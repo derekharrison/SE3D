@@ -14,6 +14,7 @@
 #include <iostream>
 #include <math.h>
 #include <stdio.h>
+#include <time.h>
 #include "mem_ops.hpp"
 #include "solver.hpp"
 #include "user_types.hpp"
@@ -60,6 +61,7 @@ int main(int argc, char* argv[]) {
     p_params physical_params;
     b_data boundaries;
     s_data solver_data;
+    clock_t t_start = clock();
 
     /* Parameters */
     domain_data.n_r = 10;            //Number of nodes in the radial direction
@@ -93,6 +95,12 @@ int main(int argc, char* argv[]) {
     /* Execute solver */
     solver(domain_data, time_data, physical_params, boundaries, &solver_data);
 
+    /* Print some results */
+    for(int i = 0; i < domain_data.n_r; ++i) {
+        printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f\n",
+                i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
+    }
+
     /* Free allocated data */
     free_mat3D(solver_data.psi, domain_data.n_r, domain_data.n_theta);
     free_mat3D(solver_data.prob_density, domain_data.n_r, domain_data.n_theta);
@@ -103,6 +111,11 @@ int main(int argc, char* argv[]) {
     delete [] solver_data.psi_p_bottom;
     delete [] solver_data.prob_density_p_top;
     delete [] solver_data.prob_density_p_bottom;
+
+    /* Print time taken for execution */
+    clock_t t_end = clock();
+    double sim_time = double (t_end - t_start)/CLOCKS_PER_SEC;
+    printf("time taken: %f\n", sim_time);
 
     return 0;
 }
