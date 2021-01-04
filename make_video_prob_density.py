@@ -31,11 +31,12 @@ X_3d = np.zeros((n_r, n_theta, n_phi))
 Y_3d = np.zeros((n_r, n_theta, n_phi))
 Z_3d = np.zeros((n_r, n_theta, n_phi))
 
-X_2d = np.zeros((n_r, n_phi))
-Y_2d = np.zeros((n_r, n_phi))
-Z_2d = np.zeros((n_r, n_phi))
+X_2d = np.zeros((n_r, n_theta))
+Y_2d = np.zeros((n_r, n_theta))
+Z_2d = np.zeros((n_r, n_theta))
 
 theta_index = int(n_theta/2)
+phi_index = int(n_phi/2)
 
 def animate(i):
     my_file = 'pd_vs_t_' + str(i) + '.txt'
@@ -48,15 +49,15 @@ def animate(i):
         for j in range(0, n_theta):
             for k in range(0, n_phi):
                 X_3d[I][j][k] = r_p[it]
-                Y_3d[I][j][k] = phi_p[it]
+                Y_3d[I][j][k] = theta_p[it]
                 Z_3d[I][j][k] = pd_real[it]
                 it = it + 1
 
     for I in range(0, n_r):
-        for k in range(0, n_phi):
-            X_2d[I][k] = X_3d[I][theta_index][k]
-            Y_2d[I][k] = Y_3d[I][theta_index][k]
-            Z_2d[I][k] = Z_3d[I][theta_index][k]
+        for j in range(0, n_theta):
+            X_2d[I][j] = X_3d[I][j][phi_index]
+            Y_2d[I][j] = Y_3d[I][j][phi_index]
+            Z_2d[I][j] = Z_3d[I][j][phi_index]
                 
     cont = plt.contourf(X_2d, Y_2d, Z_2d, linspace(0, max_pd, 10))
     return cont
@@ -66,6 +67,6 @@ anim = manimation.FuncAnimation(fig, animate, frames=size_t, repeat=False)
 
 print("Done Animation, start saving")
 
-anim.save('prob_density_solution.mp4', writer=writer, dpi=200)
+anim.save('prob_density_solution_vs_theta.mp4', writer=writer, dpi=200)
     
 print("--- %s seconds ---" % (time.time() - start_time))

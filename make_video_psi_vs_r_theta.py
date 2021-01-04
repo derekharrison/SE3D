@@ -29,12 +29,16 @@ n_phi = int(n_phi)
 
 X_3d = np.zeros((n_r, n_theta, n_phi))
 Y_3d = np.zeros((n_r, n_theta, n_phi))
+Y_3d_theta = np.zeros((n_r, n_theta, n_phi))
 Z_3d = np.zeros((n_r, n_theta, n_phi))
 Z_3d_im = np.zeros((n_r, n_theta, n_phi))
 
+X_2d = np.zeros((n_r, n_theta))
+Y_2d = np.zeros((n_r, n_theta))
+Z_2d = np.zeros((n_r, n_theta))
+
 x_arr = np.zeros((n_r))
 z_arr = np.zeros((n_r))
-z_arr_2 = np.zeros((n_r))
 z_arr_im = np.zeros((n_r))
 
 max_val = 0
@@ -50,7 +54,6 @@ else:
     min_val = min_im
 
 theta_index = int(n_theta/2)
-theta_index_2 = int(theta_index/2)
 phi_index = int(n_phi/2)
     
 def animate(i):
@@ -58,27 +61,24 @@ def animate(i):
     print(i)
     fig.clear()
     r_p, theta_p, phi_p, psi_real, psi_im = np.genfromtxt(my_file, unpack=True)
-    ax = plt.axes(xlim=(0.0, R), ylim=(min_val, max_val))
     it = 0
     for I in range(0, n_r):
         for j in range(0, n_theta):
             for k in range(0, n_phi):
                 X_3d[I][j][k] = r_p[it]
                 Y_3d[I][j][k] = phi_p[it]
+                Y_3d_theta[I][j][k] = theta_p[it]
                 Z_3d[I][j][k] = psi_real[it]
                 Z_3d_im[I][j][k] = psi_im[it]
                 it = it + 1
 
     for I in range(0, n_r):
-        x_arr[I] = X_3d[I][theta_index][phi_index]
-        z_arr[I] = Z_3d[I][theta_index][phi_index]
-        z_arr_2[I] = Z_3d[I][theta_index_2][phi_index] 
-        z_arr_im[I] = Z_3d_im[I][theta_index][phi_index]
-            
-    cont = plt.plot(x_arr, z_arr)
-    cont = plt.plot(x_arr, z_arr_im)
-    cont = plt.plot(x_arr, z_arr_2)
-    
+        for j in range(0, n_theta):
+            X_2d[I][j] = X_3d[I][j][phi_index]
+            Y_2d[I][j] = Y_3d_theta[I][j][phi_index]
+            Z_2d[I][j] = Z_3d[I][j][phi_index]
+                
+    cont = plt.contourf(X_2d, Y_2d, Z_2d, linspace(min_val, max_val, 30))
     return cont
 
 size_t = int(Nt)
@@ -86,6 +86,6 @@ anim = manimation.FuncAnimation(fig, animate, frames=size_t, repeat=False)
 
 print("Done Animation, start saving")
 
-anim.save('SE_solution.mp4', writer=writer, dpi=200)
+anim.save('SE_solution_psi_vs_r_theta.mp4', writer=writer, dpi=200)
     
 print("--- %s seconds ---" % (time.time() - start_time))
