@@ -1069,7 +1069,7 @@ void solver(d_data domain_data,
     }
 
     for(int j = 0; j < n_theta; ++j) {
-    	solver_data->theta_p[j] = theta_p[j];
+        solver_data->theta_p[j] = theta_p[j];
     }
 
     for(int k = 0; k < n_phi; ++k) {

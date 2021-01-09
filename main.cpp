@@ -26,33 +26,33 @@ double V(double r, double t) {
 }
 
 double psi_init_real(double r, double theta, double phi) {
-	/* Initial Re(psi) */
-	return r*exp(-r)*cos(theta);
+    /* Initial Re(psi) */
+    return cos(M_PI*r);
 }
 
 double psi_init_im(double r, double theta, double phi) {
-	/* Initial Im(psi) */
-	return 0.0;
+    /* Initial Im(psi) */
+    return 0.0;
 }
 
 double psi_init_p_top_real(double r) {
-	/* Initial Re(psi) for top pole nodes */
-	return r*exp(-r);
+    /* Initial Re(psi) for top pole nodes */
+    return cos(M_PI*r);
 }
 
 double psi_init_p_top_im(double r) {
-	/* Initial Im(psi) for top pole nodes */
-	return 0.0;
+    /* Initial Im(psi) for top pole nodes */
+    return 0.0;
 }
 
 double psi_init_p_bottom_real(double r) {
-	/* Initial Re(psi) for bottom pole nodes */
-	return r*exp(-r);
+    /* Initial Re(psi) for bottom pole nodes */
+    return cos(M_PI*r);
 }
 
 double psi_init_p_bottom_im(double r) {
-	/* Initial Im(psi) for bottom pole nodes */
-	return 0.0;
+    /* Initial Im(psi) for bottom pole nodes */
+    return 0.0;
 }
 
 int main(int argc, char* argv[]) {
@@ -64,14 +64,14 @@ int main(int argc, char* argv[]) {
     clock_t t_start = clock();
 
     /* Parameters */
-    domain_data.n_r = 10;            //Number of nodes in the radial direction
-    domain_data.n_theta = 10;        //Number of nodes in the theta direction
-    domain_data.n_phi = 10;          //Number of nodes in the phi direction
-    domain_data.nt = 20;             //Number of timesteps
+    domain_data.n_r = 21;            //Number of nodes in the radial direction
+    domain_data.n_theta = 11;        //Number of nodes in the theta direction
+    domain_data.n_phi = 11;          //Number of nodes in the phi direction
+    domain_data.nt = 200;             //Number of timesteps
     domain_data.R = 1.0;             //Length of domain in the radial direction
 
     time_data.to = 0.0;              //Initial time
-    time_data.tf = 2.0;              //Final time
+    time_data.tf = 20.0;              //Final time
 
     physical_params.h = 1.0;         //Constant
     physical_params.m = 1.0;         //Mass of particle
