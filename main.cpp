@@ -27,7 +27,7 @@ double V(double r, double t) {
 
 double psi_init_real(double r, double theta, double phi) {
     /* Initial Re(psi) */
-    return cos(M_PI*r);
+    return sin(M_PI*r);
 }
 
 double psi_init_im(double r, double theta, double phi) {
@@ -37,7 +37,7 @@ double psi_init_im(double r, double theta, double phi) {
 
 double psi_init_p_top_real(double r) {
     /* Initial Re(psi) for top pole nodes */
-    return cos(M_PI*r);
+    return sin(M_PI*r);
 }
 
 double psi_init_p_top_im(double r) {
@@ -47,7 +47,7 @@ double psi_init_p_top_im(double r) {
 
 double psi_init_p_bottom_real(double r) {
     /* Initial Re(psi) for bottom pole nodes */
-    return cos(M_PI*r);
+    return sin(M_PI*r);
 }
 
 double psi_init_p_bottom_im(double r) {
