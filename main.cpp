@@ -67,11 +67,11 @@ int main(int argc, char* argv[]) {
     domain_data.n_r = 21;            //Number of nodes in the radial direction
     domain_data.n_theta = 11;        //Number of nodes in the theta direction
     domain_data.n_phi = 11;          //Number of nodes in the phi direction
-    domain_data.nt = 200;             //Number of timesteps
+    domain_data.nt = 20;             //Number of timesteps
     domain_data.R = 1.0;             //Length of domain in the radial direction
 
     time_data.to = 0.0;              //Initial time
-    time_data.tf = 20.0;              //Final time
+    time_data.tf = 2.0;              //Final time
 
     physical_params.h = 1.0;         //Constant
     physical_params.m = 1.0;         //Mass of particle
