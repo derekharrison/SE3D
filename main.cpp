@@ -97,8 +97,10 @@ int main(int argc, char* argv[]) {
 
     /* Print some results */
     for(int i = 0; i < domain_data.n_r; ++i) {
-        printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f\n",
-                i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b);
+        printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f, psi[%i][%i][%i] real: %f, im: %f\n",
+                i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b,
+                i, domain_data.n_theta/2, domain_data.n_phi/2, solver_data.psi[i][domain_data.n_theta/2][domain_data.n_phi/2].a,
+                solver_data.psi[i][domain_data.n_theta/2][domain_data.n_phi/2].b);
     }
 
     /* Free allocated data */
