@@ -178,7 +178,7 @@ void solver(d_data domain_data,
     psi_p_bottom[n_r-1].b = psiR.b;
 
     /* Start simulation */
-    int max_gs = 500;
+    int max_gs = 1000;
     int timestep = 0;
     Complex I(0,1);
     double max_real = -1e+8;
