@@ -27,7 +27,7 @@ double V(double r, double t) {
 
 double psi_init_real(double r, double theta, double phi) {
     /* Initial Re(psi) */
-    return sin(M_PI*r);
+    return sin(2*M_PI*r);
 }
 
 double psi_init_im(double r, double theta, double phi) {
@@ -37,7 +37,7 @@ double psi_init_im(double r, double theta, double phi) {
 
 double psi_init_p_top_real(double r) {
     /* Initial Re(psi) for top pole nodes */
-    return sin(M_PI*r);
+    return sin(2*M_PI*r);
 }
 
 double psi_init_p_top_im(double r) {
@@ -47,7 +47,7 @@ double psi_init_p_top_im(double r) {
 
 double psi_init_p_bottom_real(double r) {
     /* Initial Re(psi) for bottom pole nodes */
-    return sin(M_PI*r);
+    return sin(2*M_PI*r);
 }
 
 double psi_init_p_bottom_im(double r) {
@@ -97,7 +97,8 @@ int main(int argc, char* argv[]) {
 
     /* Print some results */
     for(int i = 0; i < domain_data.n_r; ++i) {
-        printf("psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f, psi[%i][%i][%i] real: %f, im: %f\n",
+        printf("r_p: %f, psi_p_top[%i] real: %f, im: %f, psi_p_bottom[%i] real: %f, im: %f, psi[%i][%i][%i] real: %f, im: %f\n",
+                solver_data.r_p[i],
                 i, solver_data.psi_p_top[i].a, solver_data.psi_p_top[i].b, i, solver_data.psi_p_bottom[i].a, solver_data.psi_p_bottom[i].b,
                 i, domain_data.n_theta/2, domain_data.n_phi/2, solver_data.psi[i][domain_data.n_theta/2][domain_data.n_phi/2].a,
                 solver_data.psi[i][domain_data.n_theta/2][domain_data.n_phi/2].b);

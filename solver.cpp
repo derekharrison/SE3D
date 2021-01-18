@@ -63,7 +63,7 @@ void solver(d_data domain_data,
     Complex* prob_density_p_top = new Complex[n_r];
     Complex* prob_density_p_bottom = new Complex[n_r];
 
-    double dr = R/n_r;
+    double dr = R/(n_r-1);
     double dtheta = 2*M_PI/n_theta;
     double dphi = M_PI/(n_phi+1);
     double dt = (tf - to)/nt;
