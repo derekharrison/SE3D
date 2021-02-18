@@ -35,26 +35,6 @@ double psi_init_im(double r, double theta, double phi) {
     return 0.0;
 }
 
-double psi_init_p_top_real(double r) {
-    /* Initial Re(psi) for top pole nodes */
-    return sin(2*M_PI*r);
-}
-
-double psi_init_p_top_im(double r) {
-    /* Initial Im(psi) for top pole nodes */
-    return 0.0;
-}
-
-double psi_init_p_bottom_real(double r) {
-    /* Initial Re(psi) for bottom pole nodes */
-    return sin(2*M_PI*r);
-}
-
-double psi_init_p_bottom_im(double r) {
-    /* Initial Im(psi) for bottom pole nodes */
-    return 0.0;
-}
-
 int main(int argc, char* argv[]) {
     d_data domain_data;
     t_data time_data;

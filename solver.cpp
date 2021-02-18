@@ -167,10 +167,10 @@ void solver(d_data domain_data,
         psi_p_top[i].b = 0.0;
         psi_p_bottom[i].a = 0.0;
         psi_p_bottom[i].b = 0.0;
-        psi_p_topo[i].a = psi_init_p_top_real(r_p[i]);
-        psi_p_topo[i].b = psi_init_p_top_im(r_p[i]);
-        psi_p_bottomo[i].a = psi_init_p_top_real(r_p[i]);
-        psi_p_bottomo[i].b = psi_init_p_top_im(r_p[i]);
+        psi_p_topo[i].a = psi_init_real(r_p[i], 0, 0);
+        psi_p_topo[i].b = psi_init_im(r_p[i], 0, 0);
+        psi_p_bottomo[i].a = psi_init_real(r_p[i], 0, M_PI);
+        psi_p_bottomo[i].b = psi_init_im(r_p[i], 0, M_PI);
     }
     psi_p_top[n_r-1].a = psiR.a;
     psi_p_top[n_r-1].b = psiR.b;
